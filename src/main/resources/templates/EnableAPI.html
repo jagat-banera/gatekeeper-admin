@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Enable APIs</title>
+</head>
+<body>
+<h2>Register APIs</h2>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Version</th>
+    <th>Endpoint</th>
+    <th>Target URL</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="route : ${routes}">
+    <td th:text="${route.name}"></td>
+    <td th:text="${route.version}"></td>
+    <td th:text="${route.endpoint}"></td>
+    <td th:text="${route.targetUrl}"></td>
+    <td>
+      <!-- Delete button -->
+      <form th:action="@{/ui/manage-api/delete/{id}(id=${route.id})}" method="post">
+        <button type="submit">Delete</button>
+      </form>
+
+      <!-- Activate button -->
+      <form th:action="@{/ui/manage-api/activate/{id}(id=${route.id})}" method="post">
+        <button type="submit">Activate</button>
+      </form>
+
+      <!-- Deactivate button -->
+      <form th:action="@{/ui/manage-api/deactivate/{id}(id=${route.id})}" method="post">
+        <button type="submit">Deactivate</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<br/>
+<a href="/ui/register">Add Another Route</a>
+</body>
+</html>

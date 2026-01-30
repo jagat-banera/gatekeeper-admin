@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register APIs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 400px;
+            background: #fff;
+            padding: 25px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        form label {
+            display: block;
+            font-weight: bold;
+            margin: 10px 0 5px;
+            color: #34495e;
+        }
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border 0.3s;
+        }
+        input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        .error {
+            color: #e74c3c;
+            font-size: 13px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+        }
+        .link a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Register APIs</h2>
+    <form th:action="@{/ui/register-api}" th:object="${route}" method="post">
+        <label>Name:</label>
+        <input type="text" th:field="*{name}" required/>
+        <span class="error"
+              th:if="${#fields.hasErrors('name')}"
+              th:errors="*{name}"></span>
+
+        <label>Version:</label>
+        <input type="number" min="0" max="10" th:field="*{version}" required/>
+        <span class="error"
+              th:if="${#fields.hasErrors('version')}"
+              th:errors="*{version}"></span>
+
+        <label>Endpoint:</label>
+        <input type="text" th:field="*{endpoint}" placeholder="/notify/**" required/>
+        <span class="error"
+              th:if="${#fields.hasErrors('endpoint')}"
+              th:errors="*{endpoint}"></span>
+
+        <label>Target URL:</label>
+        <input type="text" th:field="*{targetUrl}" placeholder="http://localhost:8082" required/>
+        <span class="error"
+              th:if="${#fields.hasErrors('targetUrl')}"
+              th:errors="*{targetUrl}"></span>
+
+        <button type="submit">Save</button>
+    </form>
+
+    <div class="link">
+        <a href="/ui/register">Add Another Route</a>
+    </div>
+</div>
+</body>
+</html>
