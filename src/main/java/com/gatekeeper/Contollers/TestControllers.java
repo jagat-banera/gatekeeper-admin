@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestControllers {
 
-    @GetMapping("/send-mail")
+    @GetMapping("/send-mailer")
     public String sendMail(){
         return "Netty Working Sucesfully";
     }

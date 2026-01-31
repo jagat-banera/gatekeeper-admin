@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+// These are the list of controllers / endpoints which are only oy be called my gateway
+// to request data from the admin server.
+
 @RestController
 @RequestMapping("/gateway")
 public class GatewayControllers {

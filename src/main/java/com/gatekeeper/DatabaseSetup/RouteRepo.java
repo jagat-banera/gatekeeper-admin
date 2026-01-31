@@ -1,5 +1,6 @@
 package com.gatekeeper.DatabaseSetup;
 
+import com.gatekeeper.DTO.GatewayRouteDTO;
 import com.gatekeeper.DatabaseSetup.projection.ActiveRouteView;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -31,6 +32,7 @@ public interface RouteRepo extends JpaRepository<RouteMapper,Long> {
 
 
     // ----------------------- GATEWAY QUERIES--------------------------------------//
+
     @Query("""
        SELECT r.endpoint AS endpoint,
               r.targetUrl AS targetUrl
@@ -38,6 +40,20 @@ public interface RouteRepo extends JpaRepository<RouteMapper,Long> {
        WHERE r.active = true
        """)
     List<ActiveRouteView> gatewayRoutes();
+
+
+    @Query("""
+            SELECT r.endpoint AS endpoint,
+                   r.targetUrl AS targetUrl
+            FROM RouteMapper r
+            WHERE r.id = :id
+            """
+    )
+    GatewayRouteDTO findGatewayRoute(@Param("id") Integer id);
+
+
+
+
 
 
 

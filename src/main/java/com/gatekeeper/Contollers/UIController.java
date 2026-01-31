@@ -51,7 +51,7 @@ public class UIController {
             return "RegisterAPIs";
         }
 
-        // Register the Rooute
+        // Register the Route
         routeService.registerRoute(routeDTO);
 
         return "redirect:/ui/list-api";
@@ -60,7 +60,6 @@ public class UIController {
     }
 
     // ------------ MANAGE ROUTES CONTROLLER ------------------- //
-
 
     @GetMapping("/manage-api")
     public String ManageApi(Model model){
@@ -76,15 +75,15 @@ public class UIController {
         return "redirect:/ui/list-api";
     }
 
-//    @PostMapping("/manage-api/activate/{id}")
-//    public String activateRoute(@PathVariable Integer id) {
-//
-//        dynamicRoutes.addDynamicRoute(id);
-//
-//        return "redirect:/ui/list-api";
-//
-//    }
-//
+    @PostMapping("/manage-api/activate/{id}")
+    public String activateRoute(@PathVariable Integer id) {
+
+        routeService.activateAPI(id);
+
+        return "redirect:/ui/list-api";
+
+    }
+
 //    @PostMapping("/manage-api/deactivate/{id}")
 //    public String deactivateRoute(@PathVariable Integer id) {
 //
