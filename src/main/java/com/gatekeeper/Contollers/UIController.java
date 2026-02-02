@@ -84,13 +84,13 @@ public class UIController {
 
     }
 
-//    @PostMapping("/manage-api/deactivate/{id}")
-//    public String deactivateRoute(@PathVariable Integer id) {
-//
-//        dynamicRoutes.DeleteRoute(id);
-//
-//        return "redirect:/ui/list-api" ;
-//
-//    }
+   @PostMapping("/manage-api/deactivate/{id}")
+    public String deactivateRoute(@PathVariable Integer id) {
+
+        routeService.deactivateApi(id);
+
+        return "redirect:/ui/list-api" ;
+
+    }
 
 }

@@ -25,5 +25,6 @@ The Table Structure is as follows -
 | target_url | VARCHAR   | NOT NULL               | Downstream service URL                 |
 
 
+These are the Restful APis that the Admin Sever Uses to Communicate with Gateway - 
 
 

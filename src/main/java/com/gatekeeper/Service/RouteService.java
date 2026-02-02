@@ -62,9 +62,30 @@ public class RouteService {
 
     }
 
-    public void deactivateAPI(Integer id){
+
+    public String deactivateApi(Integer id){
+        // Update in the DB First
         routeRepo.deactivateRoute(id);
+
+        // Update it in the Gateway
+        // Call the gateway endpoint "/gateway/remove-route"
+        // find the Gateway Route by ID
+
+
+        GatewayRouteDTO routeDTO = routeRepo.findGatewayRoute(id);
+
+        ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8082/gateway/remove-route", routeDTO,
+                String.class);
+
+        if(response.getStatusCode().is2xxSuccessful()){
+            System.out.println(response.getBody());
+        }
+
+        return response.getBody() ;
+
     }
+
+
 
     public List<ActiveRouteView> getGatewayRoutes(){
         return routeRepo.gatewayRoutes();

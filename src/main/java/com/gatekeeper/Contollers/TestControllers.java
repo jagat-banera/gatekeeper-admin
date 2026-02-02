@@ -8,7 +8,7 @@ public class TestControllers {
 
     @GetMapping("/send-mailer")
     public String sendMail(){
-        return "Netty Working Sucesfully";
+        return "Netty Working Sucesfully LOL ";
     }
 
 }
