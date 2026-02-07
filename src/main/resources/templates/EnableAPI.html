@@ -2,11 +2,131 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Enable APIs</title>
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: #f5f7fb;
+      margin: 0;
+      padding: 40px;
+      color: #333;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    thead {
+      background-color: #f0f3f8;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      text-align: left;
+    }
+
+    th {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #555;
+    }
+
+    tr {
+      border-bottom: 1px solid #eee;
+    }
+
+    tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background-color: #f9fbff;
+    }
+
+    td {
+      font-size: 15px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    form {
+      display: inline;
+    }
+
+    button {
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-delete {
+      background-color: #ffebee;
+      color: #c62828;
+    }
+
+    .btn-delete:hover {
+      background-color: #ffcdd2;
+    }
+
+    .btn-activate {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .btn-activate:hover {
+      background-color: #c8e6c9;
+    }
+
+    .btn-deactivate {
+      background-color: #fff3e0;
+      color: #ef6c00;
+    }
+
+    .btn-deactivate:hover {
+      background-color: #ffe0b2;
+    }
+
+    .footer-link {
+      display: inline-block;
+      margin-top: 24px;
+      text-decoration: none;
+      color: #1976d2;
+      font-weight: 500;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
+
 <body>
+
 <h2>Register APIs</h2>
 
-<table border="1">
+<table>
   <thead>
   <tr>
     <th>Name</th>
@@ -16,6 +136,7 @@
     <th>Actions</th>
   </tr>
   </thead>
+
   <tbody>
   <tr th:each="route : ${routes}">
     <td th:text="${route.name}"></td>
@@ -23,26 +144,28 @@
     <td th:text="${route.endpoint}"></td>
     <td th:text="${route.targetUrl}"></td>
     <td>
-      <!-- Delete button -->
-      <form th:action="@{/ui/manage-api/delete/{id}(id=${route.id})}" method="post">
-        <button type="submit">Delete</button>
-      </form>
+      <div class="actions">
+        <!-- Delete button -->
+        <form th:action="@{/ui/manage-api/delete/{id}(id=${route.id})}" method="post">
+          <button type="submit" class="btn-delete">Delete</button>
+        </form>
 
-      <!-- Activate button -->
-      <form th:action="@{/ui/manage-api/activate/{id}(id=${route.id})}" method="post">
-        <button type="submit">Activate</button>
-      </form>
+        <!-- Activate button -->
+        <form th:action="@{/ui/manage-api/activate/{id}(id=${route.id})}" method="post">
+          <button type="submit" class="btn-activate">Activate</button>
+        </form>
 
-      <!-- Deactivate button -->
-      <form th:action="@{/ui/manage-api/deactivate/{id}(id=${route.id})}" method="post">
-        <button type="submit">Deactivate</button>
-      </form>
+        <!-- Deactivate button -->
+        <form th:action="@{/ui/manage-api/deactivate/{id}(id=${route.id})}" method="post">
+          <button type="submit" class="btn-deactivate">Deactivate</button>
+        </form>
+      </div>
     </td>
   </tr>
   </tbody>
 </table>
 
-<br/>
-<a href="/ui/register">Add Another Route</a>
+<a href="/ui/register-api" class="footer-link">➕ Add Another Route</a>
+
 </body>
 </html>
