@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Initial Admin Setup</title>
+    <meta charset="UTF-8">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .signup-container {
+            width: 380px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        input {
+            width: 100%;
+            padding: 11px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus {
+            border-color: #1976d2;
+            box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.15);
+        }
+
+        .error {
+            margin-top: 6px;
+            font-size: 12px;
+            color: #d32f2f;
+        }
+
+        .global-error {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            background: #fdecea;
+            color: #c62828;
+            font-size: 13px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            background: #1976d2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        button:hover {
+            background: #1565c0;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .hint {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="signup-container">
+    <h2>Initial Admin Setup</h2>
+
+    <form th:action="@{/admin-signup}"
+          th:object="${adminSignupRequest}"
+          method="post">
+
+        <div th:if="${globalError}" class="global-error">
+            <p th:text="${globalError}"></p>
+        </div>
+
+        <div class="form-group">
+            <input type="text"
+                   th:field="*{username}"
+                   placeholder="Admin Username"/>
+            <div th:if="${#fields.hasErrors('username')}"
+                 th:errors="*{username}"
+                 class="error"></div>
+        </div>
+
+        <div class="form-group">
+            <input type="password"
+                   th:field="*{password}"
+                   placeholder="Password"/>
+            <div th:if="${#fields.hasErrors('password')}"
+                 th:errors="*{password}"
+                 class="error"></div>
+        </div>
+
+        <div class="form-group">
+            <input type="password"
+                   th:field="*{confirmedPassword}"
+                   placeholder="Confirm Password"/>
+            <div th:if="${#fields.hasErrors('confirmedPassword')}"
+                 th:errors="*{confirmedPassword}"
+                 class="error"></div>
+        </div>
+
+        <button type="submit">Create Admin</button>
+    </form>
+
+    <div class="hint">
+        ⚠️ This setup is available only once after deployment
+    </div>
+</div>
+
+</body>
+</html>

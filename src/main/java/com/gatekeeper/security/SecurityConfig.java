@@ -1,16 +1,19 @@
 package com.gatekeeper.security;
 
+import com.gatekeeper.DatabaseSetup.userRepository;
+import com.gatekeeper.Service.loginService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class securityConfig {
+public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -18,13 +21,15 @@ public class securityConfig {
         http.csrf(crsf -> crsf.disable())
 
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/ui/**").authenticated()
-                                .anyRequest().permitAll()
+                        auth.requestMatchers("/ui/manage-apis").hasRole("ADMIN")
+                                .requestMatchers("/ui/**").authenticated()
+                                .requestMatchers("/gateway/**" , "/login" , "/signup" , "/admin-signup").permitAll()
+                                .anyRequest().denyAll()
                 )
 
                 .formLogin(form ->
                         form.loginPage("/login")
-                                .defaultSuccessUrl("/ui/list-apis" , true)
+                                .defaultSuccessUrl("/ui/list-api" , true)
                                 .failureUrl("/login?error")
                                 .permitAll()
                 )
@@ -42,8 +47,6 @@ public class securityConfig {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder() ;
     }
-
-
 
 
 }

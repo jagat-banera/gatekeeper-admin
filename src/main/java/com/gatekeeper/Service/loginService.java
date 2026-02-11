@@ -21,6 +21,8 @@ public class loginService implements UserDetailsService {
         this.userRepo = userRepo;
     }
 
+
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -33,8 +35,8 @@ public class loginService implements UserDetailsService {
                 .withUsername(dbUser.getUserId())
                 .password(dbUser.getPassword())
                 .disabled(!dbUser.getEnabled())
-                .roles("USER")
-                .build() ;
+                .authorities(dbUser.getRole())
+                .build();
 
     }
 }
