@@ -1,4 +1,4 @@
-package com.gatekeeper.configuration;
+package com.gatekeeper.Configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

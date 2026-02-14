@@ -1,30 +1,14 @@
-GATEKEEPER ADMIN APPLICATION - 
+# Gatekeeper
 
-Gatekeeper Admin Application is part of the Gatekeeper Project which is a API Gateway + Monitoring Tool.
+## 🚀 Introduction
 
-The Admin Console is used for the follwing things - 
+Gatekeeper is a lightweight API Gateway and API Management system designed to centrally manage, control, and secure backend services.
 
-1. It hosts the Embedded Database which is used to hold the routes for the gateway. 
+It enables administrators to dynamically:
 
-2. It's UI panel can be used for functions like LISTING / ADDING / DELETEING / MODIFYING the routes.
+* ➕ Add new API routes
+* ✏️ Modify existing endpoints
+* ❌ Delete routes
+* 🚦 Apply rate limiting per API
 
-
-EMBEDDED DATABASE - 
-
-The DB used here is "SQLite" due to its lightweight nature. It contains all the route info in the follwing manner - 
-
-The Table Structure is as follows - 
-
-| Column Name| Data Type | Constraints            | Description                            |
-| -----------| --------- | ---------------------- | -------------------------------------- |
-| id         | INTEGER   | **PK**, AUTO-INCREMENT | Unique route identifier                |
-| name       | VARCHAR   | NOT NULL               | Human-readable route name              |
-| version    | INTEGER   | NOT NULL               | Route version (for evolution/rollouts) |
-| endpoint   | VARCHAR   | NOT NULL               | Incoming request path (e.g. /notify) |
-| active     | BOOLEAN   | NOT NULL               | Whether the route is enabled           |
-| target_url | VARCHAR   | NOT NULL               | Downstream service URL                 |
-
-
-These are the Restful APis that the Admin Sever Uses to Communicate with Gateway - 
-
-
+Gatekeeper acts as a control layer between clients and backend services, providing traffic governance, request filtering, and runtime route management without requiring server restarts.
