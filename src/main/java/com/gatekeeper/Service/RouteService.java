@@ -1,14 +1,20 @@
 package com.gatekeeper.Service;
 
+import com.gatekeeper.DTO.GatewayDTOs.ActiveRouteRecord;
+import com.gatekeeper.DTO.GatewayDTOs.Route;
+import com.gatekeeper.DTO.GatewayDTOs.RouteKey;
 import com.gatekeeper.DTO.GatewayRouteDTO;
 import com.gatekeeper.DTO.RouteDTO;
 import com.gatekeeper.DatabaseSetup.RouteMapper;
 import com.gatekeeper.DatabaseSetup.RouteRepo;
 import com.gatekeeper.DatabaseSetup.projection.ActiveRouteView;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -87,8 +93,25 @@ public class RouteService {
 
 
 
-    public List<ActiveRouteView> getGatewayRoutes(){
-        return routeRepo.gatewayRoutes();
+    public List<ActiveRouteRecord> getGatewayRoutes(){
+
+        List<ActiveRouteRecord> activeRouteRecords = new LinkedList<>();
+
+        // This gets the DB data of all Active Routes that will be send to Gateway Over HTTP
+        List<ActiveRouteView> activeRouteViews = routeRepo.gatewayRoutes();
+
+        activeRouteViews.forEach(route ->
+                activeRouteRecords.add(
+                        new ActiveRouteRecord(
+                                new RouteKey(route.getEndpoint(), route.getHttpMethod()),
+                                new Route(route.getTargetUrl())
+                        )
+                )
+                );
+
+        return activeRouteRecords ;
+
+
     }
 
 

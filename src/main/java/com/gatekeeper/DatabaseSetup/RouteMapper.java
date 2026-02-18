@@ -3,6 +3,8 @@ package com.gatekeeper.DatabaseSetup;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
+import org.springframework.http.HttpMethod;
 
 @Entity
 @Table(name = "RouteMapper")
@@ -26,6 +28,9 @@ public class RouteMapper {
 
     @NotNull
     private String targetUrl ;
+
+    @NotEmpty
+    private String httpMethod = HttpMethod.GET.toString() ;
 
     public Integer getId() {
         return id;
@@ -73,5 +78,13 @@ public class RouteMapper {
 
     public void setTargetUrl(String targetUrl) {
         this.targetUrl = targetUrl;
+    }
+
+    public String getHttpMethod() {
+        return httpMethod;
+    }
+
+    public void setHttpMethod(String httpMethod) {
+        this.httpMethod = httpMethod;
     }
 }

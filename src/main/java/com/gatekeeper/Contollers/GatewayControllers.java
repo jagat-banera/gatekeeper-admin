@@ -1,6 +1,7 @@
 package com.gatekeeper.Contollers;
 
 
+import com.gatekeeper.DTO.GatewayDTOs.ActiveRouteRecord;
 import com.gatekeeper.DatabaseSetup.projection.ActiveRouteView;
 import com.gatekeeper.Service.RouteService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +24,9 @@ public class GatewayControllers {
     }
 
     @GetMapping("/routes")
-    public List<ActiveRouteView> getActiveRoutes(){
+    public List<ActiveRouteRecord> getActiveRoutes(){
 
-        return routeService.getGatewayRoutes() ;
+       return routeService.getGatewayRoutes();
 
     }
 

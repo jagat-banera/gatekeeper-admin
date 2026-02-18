@@ -21,7 +21,7 @@ public class SecurityConfig {
                         auth.requestMatchers("/ui/manage-apis").hasRole("ADMIN")
                                 .requestMatchers("/ui/**").authenticated()
                                 .requestMatchers("/gateway/**" , "/login" , "/signup" , "/admin-signup").permitAll()
-                                .anyRequest().denyAll()
+                                .anyRequest().permitAll()
                 )
 
                 .formLogin(form ->
