@@ -20,7 +20,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/ui/manage-apis").hasRole("ADMIN")
                                 .requestMatchers("/ui/**").authenticated()
-                                .requestMatchers("/gateway/**" , "/login" , "/signup" , "/admin-signup").permitAll()
+                                .requestMatchers("/gateway/**" , "/login" , "/signup" , "/admin-signup" ,"/actuator/**").permitAll()
                                 .anyRequest().denyAll()
                 )
 

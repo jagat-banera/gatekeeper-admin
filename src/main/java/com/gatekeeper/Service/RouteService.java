@@ -8,6 +8,7 @@ import com.gatekeeper.DTO.RouteDTO;
 import com.gatekeeper.DatabaseSetup.RouteMapper;
 import com.gatekeeper.DatabaseSetup.RouteRepo;
 import com.gatekeeper.DatabaseSetup.projection.ActiveRouteView;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,9 @@ public class RouteService {
 
     private final RouteRepo routeRepo ;
     private final RestTemplate restTemplate ;
+
+    @Value("${gatekeeper.gateway.url}")
+    private String gatewayUrl;
 
     public RouteService(RouteRepo routeRepo, RestTemplate restTemplate) {
         this.routeRepo = routeRepo;
@@ -57,7 +61,9 @@ public class RouteService {
 
         GatewayRouteDTO routeDTO = routeRepo.findGatewayRoute(id);
 
-        ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8082/gateway/add-route", routeDTO,
+        System.out.println("Gateway URL from properties: " + gatewayUrl);
+
+        ResponseEntity<String> response = restTemplate.postForEntity(gatewayUrl + "/gateway/add-route", routeDTO,
                 String.class);
 
         if(response.getStatusCode().is2xxSuccessful()){
@@ -80,7 +86,7 @@ public class RouteService {
 
         GatewayRouteDTO routeDTO = routeRepo.findGatewayRoute(id);
 
-        ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:8082/gateway/remove-route", routeDTO,
+        ResponseEntity<String> response = restTemplate.postForEntity(gatewayUrl + "/gateway/remove-route", routeDTO,
                 String.class);
 
         if(response.getStatusCode().is2xxSuccessful()){
