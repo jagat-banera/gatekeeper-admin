@@ -45,12 +45,13 @@ public interface RouteRepo extends JpaRepository<RouteMapper,Long> {
 
     @Query("""
             SELECT r.endpoint AS endpoint,
-                   r.targetUrl AS targetUrl
+                   r.targetUrl AS targetUrl,
+                   r.httpMethod As httpMethod
             FROM RouteMapper r
             WHERE r.id = :id
             """
     )
-    GatewayRouteDTO findGatewayRoute(@Param("id") Integer id);
+    ActiveRouteView findGatewayRoute(@Param("id") Integer id);
 
 
 

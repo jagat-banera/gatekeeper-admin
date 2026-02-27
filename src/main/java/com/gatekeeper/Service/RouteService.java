@@ -9,15 +9,15 @@ import com.gatekeeper.DatabaseSetup.RouteMapper;
 import com.gatekeeper.DatabaseSetup.RouteRepo;
 import com.gatekeeper.DatabaseSetup.projection.ActiveRouteView;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpMethod;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
+
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
+
 import java.util.stream.Collectors;
 
 @Service
@@ -47,7 +47,7 @@ public class RouteService {
 
         RouteMapper routeMapper = convertToEntity(routeDTO);
 
-        routeRepo.save(routeMapper);
+        routeRepo.saveAndFlush(routeMapper);
 
     }
 
@@ -59,11 +59,26 @@ public class RouteService {
         // Call the gateway endpoint "/gateway/add-route"
         // find the Gateway Route by ID
 
-        GatewayRouteDTO routeDTO = routeRepo.findGatewayRoute(id);
+
+        // The conversion pf GatewayRouteDTO to ActiveRouteRecord is done below
+        // This is done to send data in the same format to add on the gateway end
+        // that has been used to load routes on Startup
+
+        ActiveRouteView routeDTO = routeRepo.findGatewayRoute(id);
+
+        ActiveRouteRecord activeRouteRecord = new ActiveRouteRecord(
+                new RouteKey(routeDTO.getEndpoint(),routeDTO.getHttpMethod()),
+                new Route(routeDTO.getTargetUrl())
+        );
+
+
+
 
         System.out.println("Gateway URL from properties: " + gatewayUrl);
 
-        ResponseEntity<String> response = restTemplate.postForEntity(gatewayUrl + "/gateway/add-route", routeDTO,
+        System.out.println(activeRouteRecord);
+
+        ResponseEntity<String> response = restTemplate.postForEntity(gatewayUrl + "/gateway/add-route", activeRouteRecord,
                 String.class);
 
         if(response.getStatusCode().is2xxSuccessful()){
@@ -84,7 +99,7 @@ public class RouteService {
         // find the Gateway Route by ID
 
 
-        GatewayRouteDTO routeDTO = routeRepo.findGatewayRoute(id);
+        ActiveRouteView routeDTO = routeRepo.findGatewayRoute(id);
 
         ResponseEntity<String> response = restTemplate.postForEntity(gatewayUrl + "/gateway/remove-route", routeDTO,
                 String.class);

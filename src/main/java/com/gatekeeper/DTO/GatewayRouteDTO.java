@@ -4,10 +4,15 @@ public class GatewayRouteDTO {
 
     private String endpoint ;
     private String targetUrl;
+    private String httpMethod ;
 
-    public GatewayRouteDTO(String endpoint, String targetUrl) {
+    public GatewayRouteDTO(String endpoint, String targetUrl,String httpMethod) {
         this.endpoint = endpoint;
         this.targetUrl = targetUrl;
+        this.httpMethod = httpMethod ;
+    }
+
+    public GatewayRouteDTO() {
     }
 
     public String getEndpoint() {
@@ -24,5 +29,13 @@ public class GatewayRouteDTO {
 
     public void setTargetUrl(String targetUrl) {
         this.targetUrl = targetUrl;
+    }
+
+    public String getHttpMethod() {
+        return httpMethod;
+    }
+
+    public void setHttpMethod(String httpMethod) {
+        this.httpMethod = httpMethod;
     }
 }
